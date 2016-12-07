@@ -156,4 +156,8 @@ app.post('/articles/:id', function(req, res){
   });
 });
 
-
+// Listen to Port
+var port = process.env.PORT || 3000;
+app.listen(port, function(){
+  console.log('Running on port: ' + port);
+});
