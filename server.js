@@ -19,7 +19,7 @@ app.use(express.static('public'));
 
 
 // Database configuration with mongoose
-var dbName = "WebScrapperMongo"
+var dbName = "WebScrapperMongo";
 mongoose.connect('mongodb://localhost/'+ dbName);
 var db = mongoose.connection;
 
@@ -35,7 +35,7 @@ db.once('open', function() {
 
 
 // And we bring in our Comment and Article models
-var Note = require('./models/Comment.js');
+var Comment = require('./models/Comment.js');
 var Article = require('./models/Article.js');
 
 
