@@ -44,26 +44,30 @@ var Article = require('./models/Article.js');
 
 // Simple index route
 app.get('/', function(req, res) {
+  // query mongo to grab the data (porbably an array')
   res.send(index.html);
 });
 
 // A GET request to scrape the Good Reads website.
 app.get('/scrape', function(req, res) {
   // first, we grab the body of the html with request
-  request('https://www.goodreads.com/', function(error, response, html) {
+  request('https://news.ycombinator.com/', function(error, response, html) {
     // then, we load that into cheerio and save it to $ for a shorthand selector
+    // console.log('this is the payloa', html)
+    // if (error) throw error;
     var $ = cheerio.load(html);
     // now, we grab every h2 within an article tag, and do the following:
-    $('article h2').each(function(i, element) {
-
+    $('a.storylink').each(function(i, element) {
+        // console.log('this is a thing i want to store', element)
         // save an empty result object
         var result = {};
 
         // add the text and href of every link, 
         // and save them as properties of the result obj
-        result.title = $(this).children('a').text();
-        result.link = $(this).children('a').attr('href');
-
+        // result.title = $(this).children('a').text();
+        // result.link = $(this).children('a').attr('href');
+        result.title = this.children[0].data;
+        result.link = this.attribs.href;
         // using our Article model, create a new entry.
         // Notice the (result):
         // This effectively passes the result object to the entry (and the title and link)
@@ -73,11 +77,11 @@ app.get('/scrape', function(req, res) {
         entry.save(function(err, doc) {
           // log any errors
           if (err) {
-            console.log(err);
+            // console.log(err);
           } 
           // or log the doc
           else {
-            console.log(doc);
+            // console.log(doc);
           }
         });
 
@@ -98,6 +102,7 @@ app.get('/articles', function(req, res){
     } 
     // or send the doc to the browser as a json object
     else {
+      // console.log(doc); // confirm i am getting an array of objects back
       res.json(doc);
     }
   });
