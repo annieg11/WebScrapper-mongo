@@ -19,7 +19,7 @@ app.use(express.static('public'));
 
 
 // Database configuration with mongoose
-var dbName = "WebScrapperMongo";
+var dbName = "hackerNews";
 mongoose.connect('mongodb://localhost/'+ dbName);
 var db = mongoose.connection;
 

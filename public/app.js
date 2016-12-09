@@ -3,14 +3,15 @@ $.getJSON('/articles', function(data) {
   // for each one
   for (var i = 0; i<data.length; i++){
     // display the apropos information on the page
-    $('#articles').append('<li data-id="' + data[i]._id + '">'+ data[i].title + '<br />'+ data[i].link + '</li>');
-    console.log('i did a thing')
+   $('#articles').append( '<li data-id="' + data[i]._id + '">'+ data[i].title + '<br />'+ data[i].link + '</li>');
+
+    // console.log('i did a thing')
   }
 });
 
-
 // whenever someone clicks a p tag
-$(document).on('click', 'p', function(){
+// $(document).on('click', 'p', function(){
+  var Newcomments = function(data_id){
   // empty the comment from the comment section
   $('#comments').empty();
   // save the id from the p tag
@@ -41,7 +42,7 @@ $(document).on('click', 'p', function(){
         $('#bodyinput').val(data.comment.body);
       }
     });
-});
+};
 
 // when you click the savecomment button
 $(document).on('click', '#savecomment', function(){
@@ -68,4 +69,30 @@ $(document).on('click', '#savecomment', function(){
   // Also, remove the values entered in the input and textarea for comment entry
   $('#titleinput').val("");
   $('#bodyinput').val("");
+});
+
+$(function(){
+  $(document).on('click', 'li', function(){
+    // alert('click');
+    var id = $(this).data('id'),
+    newAction = 'articles/'+id;
+    $('form').attr('action', newAction);
+// URL root (so it works in eith Local Host for Heroku)
+     var baseURL = window.location.origin;
+
+// AJAX Call to add Comment
+    $.ajax({
+      url: baseURL + '/add/comment/' + id,
+      type: 'POST',
+    })
+    .done(function() {
+      // Refresh the Window after the call is done
+      location.reload();
+    });
+    
+    // Prevent Default
+    return false;
+
+
+  });
 });

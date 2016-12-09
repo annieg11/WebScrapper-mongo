@@ -13,52 +13,56 @@
 <!-- Navbar using Materialize -->
 <nav>
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Good Reads Web Scrapper</a>
+      <a href="#!" class="brand-logo">Hack News Web Scrapper</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="https://www.goodreads.com/"><i class="material-icons">Search</i></a></li>
+        <li><a href="https://news.ycombinator.com"><i class="material-icons">Search</i></a></li>
         <li><a href="https://github.com/annieg11/WebScrapper-mongo.git"><i class="material-icons">Github</i></a></li>
       </ul>
     </div>
   </nav>
   <!-- A Card to capture Article -->
   <div class="row">
-        <div class="col s12 m7">
+        <div class="col m8">
           <div class="card">
             <div class="card-image">
               <img src="images/road_big.jpg">
             </div>
             <div class="card-content" id ="articles">
+            <h3> Read These Articles</h3>
             </div>
             <div class="card-action">
-              <a href="https://www.goodreads.com/">This is a link</a>
+              <a href="https://news.ycombinator.com">This is a link</a>
             </div>
           </div>
         </div>
-      </div>
         <!-- Collections to capture comments -->
-       <div class="row">
-        <div class="col s12 m7">
-          <div class="card">
-           <div class="card-image">
+      <div class="col m4">
+        <div class="card">
+            <div class="card-image">
               <img src="images/book.jpg">
             </div>
             <div class="card-content" id ="comments">
+              <form action="articles/#" method="post">
+              <h3> Write your comment here.</h3>
+                <input name="title"/>
+                <input name="body"/>
+                <button>Submit</button>
+              </form>
             </div>
-            <div class="card-action">
-              <a href="https://www.goodreads.com/">This is a link</a>
-            </div>
-          </div>
         </div>
       </div>
+  </div>
+  
         <!-- Footer -->
-          <footer class="page-footer">
-      <div class="footer-copyright">
-        <div class="container">
-        ©copyright annie for webscrapping The Website.
-            <a class="black-text text-lighten-4 right" href="https://github.com/annieg11/WebScrapper-mongo.git"><i class="material-icons">Github</i></a>
-            </div>
+      <footer class="page-footer">
+        <div class="footer-copyright">
+          <div class="container">
+                ©copyright annie for webscrapping The Website.
+              <a class="black-text text-lighten-4 right" href="https://github.com/annieg11/WebScrapper-mongo.git"><i class="material-icons">Github</i></a>
           </div>
-        </footer>
+        </div>
+    </footer>
+        
          <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script> 
         <script src="app.js"></script>
