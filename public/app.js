@@ -45,31 +45,32 @@ $.getJSON('/articles', function(data) {
 };
 
 // when you click the savecomment button
-$(document).on('click', '#savecomment', function(){
-  // grab the id associated with the article from the submit button
-  var thisId = $(this).attr('data-id');
+// $(document).on('click', '#savecomment', function(){
+//   console.log("trying to save coment");
+//   // grab the id associated with the article from the submit button
+//   var thisId = $(this).attr('data-id');
 
-  // run a POST request to change the comment, using what's entered in the inputs
-  $.ajax({
-    method: "POST",
-    url: "/articles/" + thisId,
-    data: {
-      title: $('#titleinput').val(), // value taken from title input
-      body: $('#bodyinput').val() // value taken from comment textarea
-    }
-  })
-    // with that done
-    .done(function( data ) {
-      // log the response
-      console.log(data);
-      // empty the comment section
-      $('#comments').empty();
-    });
+//   // run a POST request to change the comment, using what's entered in the inputs
+//   $.ajax({
+//     method: "POST",
+//     url: "/articles/" + thisId,
+//     data: {
+//       title: $('#titleinput').val(), // value taken from title input
+//       body: $('#bodyinput').val() // value taken from comment textarea
+//     }
+//   })
+//     // with that done
+//     .done(function( data ) {
+//       // log the response
+//       console.log(data);
+//       // empty the comment section
+//       $('#comments').empty();
+//     });
 
-  // Also, remove the values entered in the input and textarea for comment entry
-  $('#titleinput').val("");
-  $('#bodyinput').val("");
-});
+//   // Also, remove the values entered in the input and textarea for comment entry
+//   $('#titleinput').val("");
+//   $('#bodyinput').val("");
+// });
 
 $(function(){
   $(document).on('click', 'li', function(){
@@ -94,5 +95,30 @@ $(function(){
     return false;
 
 
+  });
+});
+
+
+$(function(){
+  $('#comment-form').on('submit', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    $.ajax({
+      method: "POST",
+      url: $(this).attr('action'),
+      data: {
+        title: $('#titleinput').val(), // value taken from title input
+        body: $('#bodyinput').val() // value taken from comment textarea
+      }
+    })
+    // with that done
+    .done(function( data ) {
+      // log the response
+      console.log(data);
+      // empty the comment section      
+    });
+    // Also, remove the values entered in the input and textarea for comment entry
+    $('#titleinput').val("");
+    $('#bodyinput').val("");
   });
 });

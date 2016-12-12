@@ -114,7 +114,7 @@ app.get('/articles/:id', function(req, res){
   // prepare a query that finds the matching one in our db...
   Article.findOne({'_id': req.params.id})
   // and populate all of the comment associated with it.
-  .populate('comment')
+  .populate('comments')
   // now, execute our query
   .exec(function(err, doc){
     // log any errors
@@ -124,6 +124,7 @@ app.get('/articles/:id', function(req, res){
     // otherwise, send the doc to the browser as a json object
     else {
       res.json(doc);
+      // res.send(index.html);
     }
   });
 });
@@ -146,17 +147,31 @@ app.post('/articles/:id', function(req, res){
       // using the Article id passed in the id parameter of our url, 
       // prepare a query that finds the matching Article in our db
       // and update it to make it's lone comment the one we just saved
-      Article.findOneAndUpdate({'_id': req.params.id}, {'comment':doc._id})
-      // execute the above query
-      .exec(function(err, doc){
-        // log any errors
-        if (err){
-          console.log(err);
-        } else {
-          // or send the document to the browser
-          res.send(doc);
+      // Article.findOneAndUpdate({'_id': req.params.id}, {'comment':doc._id})
+      // // execute the above query
+      // .exec(function(err, doc){
+      //   // log any errors
+      //   if (err){
+      //     console.log(err);
+      //   } else {
+      //     // or send the document to the browser
+      //     res.json(doc);
+      //   }
+      // });
+
+
+      Article.findOneAndUpdate({'_id': req.params.id}, {'Comment':doc._id}, { $push: { "comments": doc._id } }, { new: true }, function(err, newdoc) {
+        // Send any errors to the browser
+        if (err) {
+          res.send(err);
+        }
+        // Or send the newdoc to the browser
+        else {
+          res.send(newdoc);
         }
       });
+
+
     }
   });
 });
